@@ -11,6 +11,5 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
 
-        //System.out.println((int)(Math.random() * 10));
     }
 }

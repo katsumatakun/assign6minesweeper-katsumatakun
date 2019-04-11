@@ -4,11 +4,11 @@ import java.awt.*;
 
 public class MSPanel extends JPanel implements BombListener{
 
-	MSLabel[][] squares;
-	int rows;
-	int cols;
-	int numShowing;
-	double difficulty;
+	private MSLabel[][] squares;
+	private int rows;
+	private int cols;
+	private int numShowing;
+	private double difficulty;
 
 
 	public MSPanel(int rows, int cols, double difficulty) {
@@ -21,6 +21,7 @@ public class MSPanel extends JPanel implements BombListener{
 		for(int j=0; j<rows; j++){
 			for (int k=0; k<cols; k++){
 				squares[j][k] = (new MSLabel());
+				squares[j][k].addBombListener(this);
 				add(squares[j][k]);
 			}
 		}
@@ -33,7 +34,7 @@ public class MSPanel extends JPanel implements BombListener{
 
 	}
 
-	public void setBombs(){
+	private void setBombs(){
 		int totalBombs = (int)(rows*cols*difficulty);
 		while(totalBombs!=0){
 			int r = (int)(Math.random()*(rows));
@@ -45,7 +46,7 @@ public class MSPanel extends JPanel implements BombListener{
 		}
 	}
 
-	public int getNumber(int row, int col){
+	private int getNumber(int row, int col){
 		int numAj = 0;
 		try{
 			if(squares[row-1][col-1].isBomb())
@@ -95,10 +96,15 @@ public class MSPanel extends JPanel implements BombListener{
 		return numAj;
 	}
 
-	public void setNumbers(){}
+	private void setNumbers(){
+		numShowing++;
+	}
 
-	//@Override
-	//public void update(BombEvent e) {
+	@Override
+	public void update(BombEvent e) {
 
-	//}
+		MessageDialog l = new MessageDialog("You lost");
+		JOptionPane.showMessageDialog(null, l.getMessage());
+		System.exit(0);
+	}
 }

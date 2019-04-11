@@ -22,7 +22,12 @@ public class MSCell {
     }
 
     public void toggleFlagged(){
-        isFlagged = true;
+        if(isFlagged()){
+            isFlagged = false;
+        }
+        else{
+            isFlagged = true;
+        }
     }
 
     public void reveal(){

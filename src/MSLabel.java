@@ -12,6 +12,7 @@ public class MSLabel extends JLabel {
 
 
 	public MSLabel() {
+		listeners = new ArrayList<>();
 		cell = new MSCell();
 		setPreferredSize(new Dimension(30, 30));
 		getImages();
@@ -40,24 +41,24 @@ public class MSLabel extends JLabel {
 		listeners.add(b);
 	}
 
+	public void removeBombListener(BombListener b) {
+		listeners.remove(b);
+	}
+
+	public void notifyListeners(){
+		BombEvent b = new BombEvent(this);
+		for(BombListener bl: listeners){
+			bl.update(b);
+		}
+	}
+
+	private void reveal(){
+		cell.reveal();
+	}
 	public class MSListener implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
-			if (e.isMetaDown()){
-				cell.toggleFlagged();
-				setIcon(msImages[11]);
-			} else {
-				if (cell.isBomb()) {
-					setIcon(msImages[9]);
-					JOptionPane.showMessageDialog(null, "You lost");
-				}
-				else {
-					setIcon(msImages[getBombsNear()]);
-					cell.reveal();
-				}
-			}
 
 		}
 
@@ -78,7 +79,22 @@ public class MSLabel extends JLabel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			mouseClicked(e);
+			if (e.isMetaDown()){
+				cell.toggleFlagged();
+				if(cell.isFlagged())
+					setIcon(msImages[11]);
+				else
+					setIcon(msImages[10]);
+			} else {
+				if (cell.isBomb()) {
+					setIcon(msImages[9]);
+					notifyListeners();
+				}
+				else {
+					setIcon(msImages[getBombsNear()]);
+					reveal();
+				}
+			}
 		}
 	}
 
