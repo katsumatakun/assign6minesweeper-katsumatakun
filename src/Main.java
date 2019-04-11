@@ -10,5 +10,7 @@ public class Main {
         frame.getContentPane().add(ms);
         frame.pack();
         frame.setVisible(true);
+
+        //System.out.println((int)(Math.random() * 10));
     }
 }
