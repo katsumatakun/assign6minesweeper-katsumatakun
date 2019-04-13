@@ -97,14 +97,26 @@ public class MSPanel extends JPanel implements BombListener{
 	}
 
 	private void setNumbers(){
-		numShowing++;
 	}
 
 	@Override
 	public void update(BombEvent e) {
 
-		MessageDialog l = new MessageDialog("You lost");
-		JOptionPane.showMessageDialog(null, l.getMessage());
-		System.exit(0);
+		MSLabel la = (MSLabel) e.getSource();
+		if(la.isBomb()) {
+			MessageDialog l = new MessageDialog("You lost orz.");
+			JOptionPane.showMessageDialog(null, l.getMessage());
+			System.exit(0);
+		}
+		else{
+			System.out.println("no bomb");
+			numShowing++;
+			if(numShowing == rows*cols - ((int) (rows*cols*difficulty)))
+			{
+				MessageDialog l = new MessageDialog("You won!!!!");
+				JOptionPane.showMessageDialog(null, l.getMessage());
+				System.exit(0);
+			}
+		}
 	}
 }

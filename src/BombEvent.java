@@ -2,7 +2,7 @@ import java.util.EventObject;
 
 public class BombEvent extends EventObject{
 
-    public BombEvent(Object source){
+    public BombEvent(MSLabel source){
         super(source);
     }
 }

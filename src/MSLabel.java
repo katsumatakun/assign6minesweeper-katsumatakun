@@ -88,12 +88,12 @@ public class MSLabel extends JLabel {
 			} else {
 				if (cell.isBomb()) {
 					setIcon(msImages[9]);
-					notifyListeners();
 				}
 				else {
 					setIcon(msImages[getBombsNear()]);
 					reveal();
 				}
+				notifyListeners();
 			}
 		}
 	}
