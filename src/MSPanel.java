@@ -12,6 +12,9 @@ public class MSPanel extends JPanel implements BombListener{
 
 
 	public MSPanel(int rows, int cols, double difficulty) {
+		if(difficulty>=1.0 || difficulty<=0){
+			throw new IllegalArgumentException("difficulty must be in the interval (0,1)");
+		}
 		this.rows = rows;
 		this.cols = cols;
 		this.difficulty = difficulty;
@@ -36,6 +39,9 @@ public class MSPanel extends JPanel implements BombListener{
 
 	private void setBombs(){
 		int totalBombs = (int)(rows*cols*difficulty);
+		if(totalBombs == 0){
+			throw new IllegalArgumentException("difficulty is too small to create bombs");
+		}
 		while(totalBombs!=0){
 			int r = (int)(Math.random()*(rows));
 			int c = (int)(Math.random()*(cols));
